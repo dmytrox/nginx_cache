@@ -1,0 +1,19 @@
+services:
+  node:
+      container_name: node
+      restart: always
+      build: ./app
+      image: node
+      volumes:
+        - ./app:/code      
+      ports:
+        - "4000:4000"      
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - node
